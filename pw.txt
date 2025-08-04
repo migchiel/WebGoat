@@ -1,1 +1,4 @@
 password 1234Test!
+secret = Goofy123!
+api_key: 1234-11231-12321-12312
+pwd 19Jksdhjkla%1
