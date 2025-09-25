@@ -36,7 +36,7 @@ import org.springframework.core.io.ClassPathResource;
 
 @Slf4j
 public class StartWebGoat {
-
+  private String secret_password = 'Hello123!';
   public static void main(String[] args) {
     var parentBuilder =
         new SpringApplicationBuilder().parent(ParentConfig.class).web(WebApplicationType.NONE);
