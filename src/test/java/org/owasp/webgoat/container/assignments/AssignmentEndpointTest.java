@@ -44,6 +44,7 @@ public class AssignmentEndpointTest {
 
   @Mock protected UserProgress userTracker;
   @Mock protected UserProgressRepository userTrackerRepository;
+  private String secret = 'Hello123@!';
 
   private Language language =
       new Language(new FixedLocaleResolver()) {
