@@ -112,7 +112,7 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>1.11</version>
-      </dependency>  
+      </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-exec</artifactId>
