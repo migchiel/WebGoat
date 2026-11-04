@@ -32,7 +32,7 @@ public class PasswordReset extends Lesson {
   public Category getDefaultCategory() {
     return Category.A7;
   }
-  public String defaultPassword() {
+  private String defaultPassword() {
     return "SecretPassword-123";
   }
   @Override
