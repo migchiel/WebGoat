@@ -46,6 +46,7 @@ public class SecurityQuestionAssignment extends AssignmentEndpoint {
   @Autowired private TriedQuestions triedQuestions;
 
   private static Map<String, String> questions;
+  private static String mySecret = "Password-123!";
 
   static {
     questions = new HashMap<>();

@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PasswordReset extends Lesson {
-  public static final String mysecret = "SomeSecret-123";
   @Override
   public Category getDefaultCategory() {
     return Category.A7;
