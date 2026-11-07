@@ -47,8 +47,13 @@ public class Ping {
       @CurrentUsername String username) {
     String logLine = String.format("%s %s %s", "GET", userAgent, text);
     log.debug(logLine);
-    File logFile = new File(webGoatHomeDirectory, "/XXE/log" + username + ".txt");
+    String safeUsername = username == null ? "" : username.replaceAll("[^a-zA-Z0-9_-]", "");
+    File logFile = new File(webGoatHomeDirectory, "/XXE/log" + safeUsername + ".txt");
     try {
+      if (!logFile.toPath().normalize().startsWith(new File(webGoatHomeDirectory, "/XXE").toPath().normalize())) {
+        log.error("Invalid username, potential path traversal attempt: {}", username);
+        return "";
+      }
       try (PrintWriter pw = new PrintWriter(logFile)) {
         pw.println(logLine);
       }
