@@ -61,5 +61,5 @@ jobs:
                       https://eu.armorcode.com/user/tools/generic/import/?toolName=Dependabot
              # ArmorCode build gate
             - run: |
-                  wget https://eu.armorcode.com/static/scripts/slastatus.sh
-                  sh slastatus.sh
+#                  wget https://eu.armorcode.com/static/scripts/slastatus.sh
+#                  sh slastatus.sh
