@@ -85,7 +85,8 @@ public class SqlInjectionLesson6a extends AssignmentEndpoint {
       Connection connection, String query, String accountName, boolean usedUnion) {
     try (PreparedStatement statement =
         connection.prepareStatement(
-            "SELECT * FROM user_data WHERE last_name = ?",
+            "SELECT userid, first_name, last_name, cc_number, cc_type, cookie, login_count FROM"
+                + " user_data WHERE last_name = ?",
             ResultSet.TYPE_SCROLL_INSENSITIVE,
             ResultSet.CONCUR_READ_ONLY)) {
       statement.setString(1, accountName);
