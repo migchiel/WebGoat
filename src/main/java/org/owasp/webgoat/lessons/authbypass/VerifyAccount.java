@@ -49,7 +49,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class VerifyAccount extends AssignmentEndpoint {
 
   private final LessonSession userSessionData;
-  private final String password = "Goofy-123";
 
   public VerifyAccount(LessonSession userSessionData) {
     this.userSessionData = userSessionData;
