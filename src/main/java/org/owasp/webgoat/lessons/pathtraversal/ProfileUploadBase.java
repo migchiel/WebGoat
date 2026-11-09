@@ -39,12 +39,14 @@ public class ProfileUploadBase extends AssignmentEndpoint {
 
     try {
       var uploadedFile = new File(uploadDirectory, fullName);
-      uploadedFile.createNewFile();
-      FileCopyUtils.copy(file.getBytes(), uploadedFile);
 
       if (attemptWasMade(uploadDirectory, uploadedFile)) {
         return solvedIt(uploadedFile);
       }
+
+      uploadedFile.createNewFile();
+      FileCopyUtils.copy(file.getBytes(), uploadedFile);
+
       return informationMessage(this)
           .feedback("path-traversal-profile-updated")
           .feedbackArgs(uploadedFile.getAbsoluteFile())
