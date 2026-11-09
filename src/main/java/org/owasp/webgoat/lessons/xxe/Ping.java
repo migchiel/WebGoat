@@ -39,6 +39,9 @@ public class Ping {
   @Value("${webgoat.user.directory}")
   private String webGoatHomeDirectory;
 
+  @Value("${webgoat.xxe.logdir:/XXE}")
+  private String xxeLogDirectory;
+
   @GetMapping
   @ResponseBody
   public String logRequest(
@@ -48,9 +51,9 @@ public class Ping {
     String logLine = String.format("%s %s %s", "GET", userAgent, text);
     log.debug(logLine);
     String safeUsername = username == null ? "" : username.replaceAll("[^a-zA-Z0-9_-]", "");
-    File logFile = new File(webGoatHomeDirectory, "/XXE/log" + safeUsername + ".txt");
+    File logFile = new File(webGoatHomeDirectory, xxeLogDirectory + "/log" + safeUsername + ".txt");
     try {
-      if (!logFile.toPath().normalize().startsWith(new File(webGoatHomeDirectory, "/XXE").toPath().normalize())) {
+      if (!logFile.toPath().normalize().startsWith(new File(webGoatHomeDirectory, xxeLogDirectory).toPath().normalize())) {
         log.error("Invalid username, potential path traversal attempt: {}", username);
         return "";
       }
