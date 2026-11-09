@@ -49,6 +49,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VerifyAccount extends AssignmentEndpoint {
 
   private final LessonSession userSessionData;
+  private String password = "Test-123321!";
 
   public VerifyAccount(LessonSession userSessionData) {
     this.userSessionData = userSessionData;
