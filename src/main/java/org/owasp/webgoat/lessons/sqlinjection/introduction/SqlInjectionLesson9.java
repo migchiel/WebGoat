@@ -63,7 +63,9 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
 
   protected AttackResult injectableQueryIntegrity(String name, String auth_tan) {
     StringBuilder output = new StringBuilder();
-    String query = "SELECT * FROM employees WHERE last_name = ? AND auth_tan = ?";
+    String query =
+        "SELECT userid, first_name, last_name, department, salary, auth_tan FROM employees"
+            + " WHERE last_name = ? AND auth_tan = ?";
     try (Connection connection = dataSource.getConnection()) {
       // V2019_09_26_7__employees.sql
       int oldMaxSalary = this.getMaxSalary(connection);
