@@ -71,31 +71,37 @@ public class SqlInjectionLesson9 extends AssignmentEndpoint {
       // begin transaction
       connection.setAutoCommit(false);
       // do query safely using parameterized statement
-      java.sql.PreparedStatement statement =
-          connection.prepareStatement(query, TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE);
-      statement.setString(1, name);
-      statement.setString(2, auth_tan);
-      SqlInjectionLesson8.log(connection, statement.toString());
-      statement.execute();
-      // check new sum of salaries other employees and new salaries of John
-      int newJohnSalary = this.getJohnSalary(connection);
-      int newSumSalariesOfOtherEmployees = this.getSumSalariesOfOtherEmployees(connection);
-      if (newJohnSalary > oldMaxSalary
-          && newSumSalariesOfOtherEmployees == oldSumSalariesOfOtherEmployees) {
-        // success commit
-        connection.commit(); // need execute not executeQuery
-        connection.setAutoCommit(true);
-        output.append(
-            SqlInjectionLesson8.generateTable(this.getEmployeesDataOrderBySalaryDesc(connection)));
-        return success(this).feedback("sql-injection.9.success").output(output.toString()).build();
+      try (java.sql.PreparedStatement statement =
+          connection.prepareStatement(query, TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE)) {
+        statement.setString(1, name);
+        statement.setString(2, auth_tan);
+        SqlInjectionLesson8.log(connection, statement.toString());
+        statement.execute();
+        // check new sum of salaries other employees and new salaries of John
+        int newJohnSalary = this.getJohnSalary(connection);
+        int newSumSalariesOfOtherEmployees = this.getSumSalariesOfOtherEmployees(connection);
+        if (newJohnSalary > oldMaxSalary
+            && newSumSalariesOfOtherEmployees == oldSumSalariesOfOtherEmployees) {
+          // success commit
+          connection.commit(); // need execute not executeQuery
+          connection.setAutoCommit(true);
+          output.append(
+              SqlInjectionLesson8.generateTable(
+                  this.getEmployeesDataOrderBySalaryDesc(connection)));
+          return success(this)
+              .feedback("sql-injection.9.success")
+              .output(output.toString())
+              .build();
+        }
+        // failed roolback
+        connection.rollback();
+        return failed(this)
+            .feedback("sql-injection.9.one")
+            .output(
+                SqlInjectionLesson8.generateTable(
+                    this.getEmployeesDataOrderBySalaryDesc(connection)))
+            .build();
       }
-      // failed roolback
-      connection.rollback();
-      return failed(this)
-          .feedback("sql-injection.9.one")
-          .output(
-              SqlInjectionLesson8.generateTable(this.getEmployeesDataOrderBySalaryDesc(connection)))
-          .build();
     } catch (SQLException e) {
       System.err.println(e.getMessage());
       return failed(this)
