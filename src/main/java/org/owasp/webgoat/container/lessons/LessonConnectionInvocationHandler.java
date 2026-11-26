@@ -23,8 +23,12 @@ public class LessonConnectionInvocationHandler implements InvocationHandler {
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     var authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null && authentication.getPrincipal() instanceof WebGoatUser user) {
+      var username = user.getUsername();
+      if (!username.matches("[A-Za-z0-9_]+")) {
+        throw new IllegalArgumentException("Invalid username for schema switch: " + username);
+      }
       try (var statement = targetConnection.createStatement()) {
-        statement.execute("SET SCHEMA \"" + user.getUsername() + "\"");
+        statement.execute("SET SCHEMA \"" + username + "\"");
       }
     }
     try {
